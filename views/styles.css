@@ -122,6 +122,11 @@ p {
 
 .btn-success {
   background-color: var(--bento-medgreen);
+  border-color: var(--bento-medgreen);
+}
+.btn-success:hover {
+  background-color: var(--bento-darkgreen);
+  border-color: var(--bento-darkgreen);
 }
 
 .btn-warning:disabled {
@@ -145,4 +150,34 @@ p {
   fill: var(--bento-limegreen);
   height: 3em;
   width: 3em;
+}
+
+/* MODAL */
+
+#create-version .form-check {
+  margin-bottom: 15px;
+}
+
+#create-version label {
+  display: flex;
+  align-items: center;
+}
+
+#create-version label div {
+  width: 50px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+#create-version label span {
+  font-size: 0.8em;
+  color: gray;
+}
+
+form .row {
+  justify-content: flex-end;
+}
+
+form .row button {
+  margin-right: 16px;
 }
