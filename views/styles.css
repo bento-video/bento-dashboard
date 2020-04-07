@@ -1,0 +1,163 @@
+@font-face {
+  font-family: Catamaran;
+  src: url("../assets/Fonts/Catamaran/Catamaran-Light.ttf");
+  src: url("../assets/Fonts/Catamaran/Catamaran-Bold.ttf");
+}
+
+:root {
+  --bento-blue: #02576c;
+  --bento-darkgreen: #27a87f;
+  --bento-medgreen: #4dd599;
+  --bento-limegreen: #cff52a;
+  --bento-yellow: #ffee61;
+}
+
+* {
+  /* border: 1px solid; */
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+body > * {
+  width: 1000px;
+}
+
+main {
+  min-height: 600px;
+  padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  font-family: "Catamaran", Cambria, sans-serif;
+  color: var(--bento-blue);
+}
+
+p {
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+.logo img {
+  width: 100px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.row {
+  display: flex;
+  margin: 0;
+}
+
+#original-video {
+  width: 90%;
+  border: 2px solid var(--bento-darkgreen);
+  padding: 10px;
+}
+
+#original-video .row {
+  justify-content: space-between;
+}
+
+.video-version .title {
+  font-size: 1.2em;
+  width: 50%;
+}
+
+.tag {
+  width: 80px;
+  padding: 2px 5px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+.video-version .resolution {
+  border-color: var(--bento-medgreen);
+  color: var(--bento-medgreen);
+  text-align: center;
+}
+
+.btn-success {
+  background-color: var(--bento-medgreen);
+}
+
+.btn-warning:disabled {
+  cursor: default;
+  background-color: var(--bento-yellow);
+}
+
+#versions {
+  margin-top: 20px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--bento-darkgreen);
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.video.item:hover {
+  background-color: #efffd5;
+}
+
+.item.version {
+  border-color: var(--bento-medgreen);
+}
+
+.item.create-version {
+  border: none;
+  width: 300px;
+  /* border-color: var(--bento-limegreen); */
+  justify-content: start;
+  font-size: 1.2em;
+}
+
+.item.create-version:hover {
+  color: var(--bento-limegreen);
+  cursor: pointer;
+}
+
+.create-version svg {
+  fill: var(--bento-limegreen);
+  height: 3em;
+  width: 3em;
+}
+
+.item .details {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+
+.video-title {
+  font-size: 1.5em;
+}
+
+.add-video {
+  margin: 20px auto;
+  width: fit-content;
+}
+
+.add-video svg {
+  width: 100px;
+  fill: var(--bento-limegreen);
+}
