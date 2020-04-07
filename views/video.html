@@ -20,42 +20,49 @@
   </head>
 
   <body>
-    <header>
+    <header class="container">
       <div class="logo"><img src="../assets/Images/bento_logo.png" /></div>
     </header>
-    <main>
-      <section id="original-video">
+    <main class="container">
+      <section id="original-video" class="jumbotron">
         <div class="row">
-          <h2 class="title">SoftServe.mkv</h2>
-          <button type="button" class="btn btn-danger">Delete</button>
+          <h2 class="title display-4">SoftServe.mkv</h2>
+          <button id="delete-original" type="button" class="btn btn-danger">
+            Delete
+          </button>
         </div>
-        <ul class="details">
-          <li>Format: mkv</li>
-          <li>Resolution: 1920x1080</li>
-          <li>Duration: 2:22</li>
+        <hr class="my-4" />
+        <ul class="list-group">
+          <li class="list-group-item">Format: mkv</li>
+          <li class="list-group-item">Resolution: 1920x1080</li>
+          <li class="list-group-item">Duration: 2:22</li>
         </ul>
       </section>
       <section id="versions">
         <h2>Versions</h2>
-        <ul class="versions">
-          <li class="video-version item">
-            <p class="title">SoftServe.mp4</p>
-            <div class="details">
+        <ul class="versions list-group">
+          <li class="video-version item list-group-item">
+            <div class="details col-4">
+              <h5>SoftServe.mp4</h5>
               <div class="resolution tag">1080p</div>
+            </div>
+            <div class="actions col-4">
               <button type="button" class="btn btn-success">Download</button>
               <button type="button" class="btn btn-danger">Delete</button>
             </div>
           </li>
-          <li class="video-version item">
-            <p class="title">SoftServe.mp4</p>
-            <div class="details">
+          <li class="video-version item list-group-item">
+            <div class="details col-4">
+              <h5>SoftServe.mp4</h5>
               <div class="resolution tag">480p</div>
+            </div>
+            <div class="actions col-4">
               <button type="button" class="btn btn-warning" disabled="true">
                 Pending
               </button>
             </div>
           </li>
-          <li class="create-version item">
+          <li class="create-version item list-group-item">
             <svg
               class="bi bi-plus"
               viewBox="0 0 16 16"
@@ -77,7 +84,6 @@
         </ul>
       </section>
     </main>
-    <footer></footer>
 
     <!-- Bootstrap scripts -->
     <script
