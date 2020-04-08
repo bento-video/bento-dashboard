@@ -82,6 +82,7 @@ p {
 
 #original-video .row {
   justify-content: space-between;
+  align-items: center;
 }
 
 #original-video ul {
