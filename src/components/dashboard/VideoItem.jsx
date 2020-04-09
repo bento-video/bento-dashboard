@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const VideoItem = (props) => {
   return (
-    <a className="list-group-item list-group-item-action">
+    <Link to="/video" className="list-group-item list-group-item-action">
       <div className="video">
-        <h4>SoftServe.mkv</h4>
+        <h4>{props.title}</h4>
         <p className="video-versions">Versions: 1</p>
       </div>
-    </a>
+    </Link>
   );
 };
 
