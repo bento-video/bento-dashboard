@@ -1,1 +1,1 @@
-# bento-dashboard
+# Bento Dashboard
