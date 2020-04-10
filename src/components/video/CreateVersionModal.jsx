@@ -4,13 +4,10 @@ import CreateVersionForm from './CreateVersionForm';
 
 const CreateVersionModal = () => {
   const title = "Create a new version";
-  const cmpntInfo = {
-    id: "create-version-modal",
-    label: "create-version-modal-title"
-  };
+  const id = "create-version-modal";
 
   return (
-    <Modal info={cmpntInfo} title={title}>
+    <Modal id={id} title={title}>
       <CreateVersionForm />
     </Modal>
   );
