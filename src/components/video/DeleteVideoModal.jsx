@@ -4,6 +4,7 @@ import DeleteVideoForm from './DeleteVideoForm';
 
 const DeleteVideoModal = (props) => {
   const title = "Are you sure you want to delete this video?";
+  const id = "delete-confirm-modal";
   const children = (
     <ul>
       <li>
@@ -14,7 +15,7 @@ const DeleteVideoModal = (props) => {
     </ul>
   );
   return (
-    <Modal title={title} children={children}>
+    <Modal title={title} children={children} id={id}>
       <DeleteVideoForm id={props.id} />
     </Modal>
   );

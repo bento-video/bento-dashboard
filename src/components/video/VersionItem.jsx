@@ -1,4 +1,6 @@
 import React from 'react';
+import DeleteVideoButton from './DeleteVideoButton';
+import DownloadVideoButton from './DownloadVideoButton';
 
 const VersionItem = ({ title, resolution }) => {
   return (
@@ -8,16 +10,8 @@ const VersionItem = ({ title, resolution }) => {
         <div class="resolution tag">{resolution}</div>
       </div>
       <div class="actions col-4">
-        <button type="button" class="btn btn-success">
-          Download
-        </button>
-        <button
-          type="button"
-          class="btn btn-danger"
-          data-toggle="modal"
-          data-target="#delete-confirm-modal">
-          Delete
-        </button>
+        <DownloadVideoButton />
+        <DeleteVideoButton />
       </div>
     </li>
   );

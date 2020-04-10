@@ -8,8 +8,7 @@ const Modal = (props) => {
       tabIndex="-1"
       role="dialog"
       aria-labelledby={`${props.id}-title`}
-      aria-hidden="true"
-    >
+      aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
           <div className="modal-header">
@@ -20,8 +19,7 @@ const Modal = (props) => {
               type="button"
               className="close"
               data-dismiss="modal"
-              aria-label="Close"
-            >
+              aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

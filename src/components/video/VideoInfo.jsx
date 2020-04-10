@@ -1,5 +1,6 @@
 import React from 'react';
 import DeleteVideoModal from './DeleteVideoModal';
+import DeleteVideoButton from './DeleteVideoButton';
 
 const VideoInfo = (props) => {
   const { title, format, resolution, duration } = props.video;
@@ -7,15 +8,7 @@ const VideoInfo = (props) => {
     <section id="original-video" class="jumbotron">
       <div class="row">
         <h2 class="title display-4">{title}</h2>
-        <button
-          id="delete-original"
-          type="button"
-          class="btn btn-danger"
-          data-toggle="modal"
-          data-target="#delete-confirm-modal"
-        >
-          Delete
-              </button>
+        <DeleteVideoButton />
       </div>
       <hr class="my-4" />
       <ul class="list-group">
