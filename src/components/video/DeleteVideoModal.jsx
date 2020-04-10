@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from '../Modal';
-import DeleteVersionForm from './DeleteVersionForm';
+import DeleteVideoForm from './DeleteVideoForm';
 
 const DeleteVideoModal = (props) => {
   const title = "Are you sure you want to delete this video?";
@@ -15,7 +15,7 @@ const DeleteVideoModal = (props) => {
   );
   return (
     <Modal title={title} children={children}>
-      <DeleteVersionForm id={props.id} />
+      <DeleteVideoForm id={props.id} />
     </Modal>
   );
 }
