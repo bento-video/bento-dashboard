@@ -4,19 +4,10 @@ import DeleteVideoForm from './DeleteVideoForm';
 
 const DeleteVideoModal = (props) => {
   const title = "Are you sure you want to delete this video?";
-  const id = "delete-confirm-modal";
-  const children = (
-    <ul>
-      <li>
-        This will delete <strong>all versions</strong> of this
-        video.
-      </li>
-      <li>This cannot be undone.</li>
-    </ul>
-  );
+  const modalId = `delete-${props.deleteType}-confirm-modal`;
   return (
-    <Modal title={title} children={children} id={id}>
-      <DeleteVideoForm id={props.id} />
+    <Modal title={title} id={modalId}>
+      <DeleteVideoForm id={props.id} deleteType={props.deleteType} />
     </Modal>
   );
 }

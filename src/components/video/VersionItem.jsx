@@ -11,7 +11,7 @@ const VersionItem = ({ title, resolution }) => {
       </div>
       <div class="actions col-4">
         <DownloadVideoButton />
-        <DeleteVideoButton />
+        <DeleteVideoButton deleteType={"version"} />
       </div>
     </li>
   );

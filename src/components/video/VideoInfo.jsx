@@ -8,7 +8,7 @@ const VideoInfo = (props) => {
     <section id="original-video" class="jumbotron">
       <div class="row">
         <h2 class="title display-4">{title}</h2>
-        <DeleteVideoButton />
+        <DeleteVideoButton deleteType={"video"} />
       </div>
       <hr class="my-4" />
       <ul class="list-group">
@@ -16,7 +16,8 @@ const VideoInfo = (props) => {
         <li class="list-group-item">{resolution}</li>
         <li class="list-group-item">{duration}</li>
       </ul>
-      <DeleteVideoModal />
+      <DeleteVideoModal deleteType={'version'} />
+      <DeleteVideoModal deleteType={'video'} />
     </section>
   );
 }
