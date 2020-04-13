@@ -2,17 +2,22 @@ import React from "react";
 import VideoItem from "./VideoItem";
 
 const VideoList = (props) => {
-  const videos = props.videos || ["SoftServe.mkv", "777Landing.mkv", "humility_original.mp4"];
+  const videos = props.videos || [
+    "SoftServe.mkv",
+    "777Landing.mkv",
+    "humility_original.mp4",
+  ];
 
   return (
     <div id="all-videos" className="list-group">
       {videos.map((video, idx) => (
         <VideoItem
-          title={video.name}
+          filename={video.filename}
           resolution={video.resolution}
           size={video.size}
           versions={video.versions}
-          key={idx} />
+          key={idx}
+        />
       ))}
     </div>
   );

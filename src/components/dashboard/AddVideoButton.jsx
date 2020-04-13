@@ -2,7 +2,7 @@ import React from "react";
 
 const AddVideoButton = (props) => {
   return (
-    <div id="add-video" className="d-flex">
+    <a href="#" onClick={props.onClick} id="add-video" className="d-flex">
       <svg
         className="bi bi-plus-square"
         viewBox="0 0 16 16"
@@ -27,7 +27,7 @@ const AddVideoButton = (props) => {
         />
       </svg>
       <p>Add a video</p>
-    </div>
+    </a>
   );
 };
 

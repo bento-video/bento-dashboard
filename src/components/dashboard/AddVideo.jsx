@@ -1,16 +1,27 @@
-import React from "react";
+import React, { Component } from "react";
 import AddVideoButton from "./AddVideoButton";
-// import Modal from "../Modal";
-import AddVideoForm from "./AddVideoForm";
 import AddVideoModal from "./AddVideoModal";
 
-const AddVideo = (props) => {
-  return (
-    <div>
-      <AddVideoButton />
-      <AddVideoModal />
-    </div>
-  );
-};
+class AddVideo extends Component {
+  state = {
+    showModal: false,
+  };
+
+  handleShow = () => this.setState({ showModal: true });
+  handleClose = () => this.setState({ showModal: false });
+
+  render() {
+    return (
+      <div>
+        <AddVideoButton onClick={this.handleShow} />
+        <AddVideoModal
+          show={this.state.showModal}
+          onVideoUpload={this.props.onVideoUpload}
+          onClose={this.handleClose}
+        />
+      </div>
+    );
+  }
+}
 
 export default AddVideo;

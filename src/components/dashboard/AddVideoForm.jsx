@@ -1,40 +1,50 @@
 import React, { Component } from "react";
-import axios from 'axios';
-
-const formData = new FormData();
-const videofile = document.querySelector('#new_video');
 
 class AddVideoForm extends Component {
-  state = {};
+  state = {
+    file: null,
+  };
 
-  handleAddVideo = () => {
-    console.log("in add vid method");
-    formData.append("new_video", videofile.files[0]);
-    axios.post('/videos', formData, {
-      headers: {
-        "Content-Type": 'multipart/form-data'
-      }
-    })
-      .then((response) => {
-        console.log(response);
-      }); // do something after video is uploaded
-  }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    if (!this.state.file) {
+      return;
+    }
+
+    this.props.onVideoUpload(this.state.file);
+    this.setState({
+      file: null,
+    });
+    this.props.onClose();
+  };
+
+  handleChange = (e) => {
+    e.preventDefault();
+    this.setState({
+      file: e.target.files[0],
+    });
+  };
 
   render() {
     return (
-      <form /* action="#" method="post" */>
+      <form id="add-video-form" onSubmit={this.handleSubmit}>
         <fieldset className="form-group">
-          <input type="file" name="new_video" id="new_video" />
+          <input
+            type="file"
+            name="new_video"
+            id="new_video"
+            onChange={this.handleChange}
+          />
         </fieldset>
         <div>
           <button
             type="button"
             className="btn btn-secondary"
-            data-dismiss="modal"
+            onClick={this.props.onClose}
           >
             Close
           </button>
-          <button type="submit" className="btn btn-success"/*  onClick={this.handleAddVideo} */>
+          <button type="submit" className="btn btn-success">
             Upload
           </button>
         </div>
