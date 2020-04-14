@@ -1,6 +1,7 @@
-import React from 'react';
-import DeleteVideoModal from './DeleteVideoModal';
-import DeleteVideoButton from './DeleteVideoButton';
+import React from "react";
+import DeleteVideoModal from "./DeleteVideoModal";
+import DeleteVideoButton from "./DeleteVideoButton";
+import { formatSeconds } from "../../helpers";
 
 const VideoInfo = (props) => {
   const { title, format, resolution, duration } = props.video;
@@ -14,12 +15,12 @@ const VideoInfo = (props) => {
       <ul class="list-group">
         <li class="list-group-item">{format}</li>
         <li class="list-group-item">{resolution}</li>
-        <li class="list-group-item">{duration}</li>
+        <li class="list-group-item">{formatSeconds(duration)}</li>
       </ul>
-      <DeleteVideoModal deleteType={'version'} />
-      <DeleteVideoModal deleteType={'video'} />
+      <DeleteVideoModal deleteType={"version"} />
+      <DeleteVideoModal deleteType={"video"} />
     </section>
   );
-}
+};
 
 export default VideoInfo;
