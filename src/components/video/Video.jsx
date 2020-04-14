@@ -5,22 +5,17 @@ import VersionList from "./VersionList";
 
 const Video = (props) => {
   const { id } = useParams();
-  const video = props.videos.find((video) => video.id === id);
-  return (
+  const video = props.loading
+    ? null
+    : props.videos.find((video) => video.id === id);
+  return video ? (
     <div>
       <main class="container">
-        <VideoInfo
-          video={{
-            title: video.filename,
-            format: video.format,
-            resolution: video.resolution,
-            duration: video.duration,
-          }}
-        />
+        <VideoInfo video={video} />
         <VersionList />
       </main>
     </div>
-  );
+  ) : null;
 };
 
 export default Video;

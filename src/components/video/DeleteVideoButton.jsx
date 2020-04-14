@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const DeleteVideoButton = (props) => {
   return (
@@ -6,11 +6,11 @@ const DeleteVideoButton = (props) => {
       id="delete-original"
       type="button"
       class="btn btn-danger"
-      data-toggle="modal"
-      data-target={`#delete-${props.deleteType}-confirm-modal`}>
+      onClick={props.onClick}
+    >
       Delete
     </button>
   );
-}
+};
 
 export default DeleteVideoButton;

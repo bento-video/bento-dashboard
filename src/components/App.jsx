@@ -58,7 +58,7 @@ class App extends Component {
             />
           </Route>
           <Route path="/videos/:id">
-            <Video videos={this.state.videos} />
+            <Video loading={this.state.loading} videos={this.state.videos} />
           </Route>
           <Route path="*">
             <Redirect to="/" />
