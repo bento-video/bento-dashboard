@@ -6,7 +6,7 @@ const Dashboard = (props) => {
   return (
     <main className="container">
       <h2>Your videos</h2>
-      <VideoList videos={props.videos} />
+      <VideoList videos={props.videos} loading={props.loading} />
       <AddVideo onVideoUpload={props.onVideoUpload} />
     </main>
   );

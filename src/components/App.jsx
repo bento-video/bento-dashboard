@@ -4,11 +4,11 @@ import Header from "./Header";
 import Dashboard from "./dashboard/Dashboard";
 import Video from "./video/Video";
 import axios from "axios";
-import { getContentType } from "../helpers";
 
 class App extends Component {
   state = {
     videos: null,
+    loading: true,
   };
 
   componentDidMount() {
@@ -16,29 +16,29 @@ class App extends Component {
       console.log(res.data);
       this.setState({
         videos: res.data,
+        loading: false,
       });
       console.log("STATE: ", this.state.videos);
     });
   }
 
   handleVideoUpload = async (file) => {
-    const getSignedUrlParams = { filename: file.name };
-    const videoData = await axios
-      .post("http://localhost:3001/videos/new", getSignedUrlParams)
+    const presignedPostData = await axios
+      .post("http://localhost:3001/videos/new", { filename: file.name })
       .then((res) => {
         console.log(res);
         return res.data;
       });
 
-    const config = {
-      headers: {
-        "content-type": getContentType(file.name),
-      },
-    };
-    console.log(config.headers);
+    console.log(presignedPostData);
+    const formData = new FormData();
+    Object.keys(presignedPostData.fields).forEach((key) => {
+      formData.append(key, presignedPostData.fields[key]);
+    });
+    formData.append("file", file);
 
     const videoUpload = await axios
-      .post(videoData.url, file, config)
+      .post(presignedPostData.url, formData)
       .then((res) => {
         console.log(res);
       })
@@ -53,6 +53,7 @@ class App extends Component {
           <Route exact path="/">
             <Dashboard
               videos={this.state.videos}
+              loading={this.state.loading}
               onVideoUpload={this.handleVideoUpload}
             />
           </Route>
