@@ -1,20 +1,26 @@
 import React, { Component } from "react";
-import VideoInfo from './VideoInfo';
-import VersionList from './VersionList';
+import { useParams } from "react-router-dom";
+import VideoInfo from "./VideoInfo";
+import VersionList from "./VersionList";
 
-class Video extends Component {
-  state = {};
-  render() {
-    return (
-      <div>
-        <main class="container">
-          <VideoInfo video={{ title: "SoftServe.mkv", format: "mkv", resolution: "1920x1080", duration: "2:22" }} />
-          <VersionList />
-          {/* <VideoNotFound /> wrapped in conditional */}
-        </main>
-      </div>
-    );
-  }
-}
+const Video = (props) => {
+  const { id } = useParams();
+  const video = props.videos.find((video) => video.id === id);
+  return (
+    <div>
+      <main class="container">
+        <VideoInfo
+          video={{
+            title: video.filename || "SoftServe.mkv",
+            format: video.format || "mkv",
+            resolution: video.resolution || "1920x1080",
+            duration: video.duration || "2:22",
+          }}
+        />
+        <VersionList />
+      </main>
+    </div>
+  );
+};
 
 export default Video;

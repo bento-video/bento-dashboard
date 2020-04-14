@@ -69,7 +69,6 @@ a:hover {
 #add-video p {
   color: darkslategray;
   font-weight: bold;
-  transition: color 0.15s ease-in-out;
 }
 
 #add-video svg {
@@ -81,10 +80,6 @@ a:hover {
 
 #add-video svg:hover {
   fill: var(--bento-limegreen);
-}
-
-#add-video svg:hover + p {
-  color: var(--bento-limegreen);
 }
 
 #add-video-form button {

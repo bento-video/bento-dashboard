@@ -10,6 +10,7 @@ const VideoList = (props) => {
     <div id="all-videos" className="list-group">
       {props.videos.map((video, idx) => (
         <VideoItem
+          videoId={video.id}
           filename={video.filename}
           resolution={video.resolution}
           size={video.size}

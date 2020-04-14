@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 
 const VideoItem = (props) => {
   return (
-    <Link to="/video" className="list-group-item list-group-item-action">
+    <Link
+      to={`/videos/${props.videoId}`}
+      className="list-group-item list-group-item-action"
+    >
       <div className="video">
         <h4>{props.filename}</h4>
         <p className="video-versions">Resolution: {props.resolution}</p>

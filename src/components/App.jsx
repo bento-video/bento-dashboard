@@ -57,8 +57,8 @@ class App extends Component {
               onVideoUpload={this.handleVideoUpload}
             />
           </Route>
-          <Route path="/video">
-            <Video />
+          <Route path="/videos/:id">
+            <Video videos={this.state.videos} />
           </Route>
           <Route path="*">
             <Redirect to="/" />
