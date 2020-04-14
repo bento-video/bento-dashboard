@@ -14,28 +14,28 @@ class DeleteVideoForm extends Component {
       <div>
         <ul>
           <li>
-            This will delete{" "}
+            This will delete
             <strong>
               {this.props.deleteType === "video"
-                ? "all versions"
-                : "only this version"}
-            </strong>{" "}
+                ? " all versions "
+                : " only this version "}
+            </strong>
             of this video.
           </li>
           <li>
-            <span class="alert">This cannot be undone.</span>
+            <span className="alert">This cannot be undone.</span>
           </li>
         </ul>
         <form id="delete-form" onSubmit={this.handleSubmit}>
-          <div class="row">
+          <div className="row">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               onClick={this.props.onClose}
             >
               Close
             </button>
-            <button type="submit" class="btn btn-danger">
+            <button type="submit" className="btn btn-danger">
               Delete
             </button>
           </div>

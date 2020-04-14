@@ -1,8 +1,8 @@
-import React from 'react';
-import DeleteVideoButton from './DeleteVideoButton';
-import DownloadVideoButton from './DownloadVideoButton';
+import React from "react";
+import DeleteVideoButton from "./DeleteVideoButton";
+import DownloadVideoButton from "./DownloadVideoButton";
 
-const VersionItem = ({ title, resolution }) => {
+const VersionItem = ({ title, resolution, videoId, onShowModal }) => {
   return (
     <li class="video-version item list-group-item">
       <div class="details col-4">
@@ -11,10 +11,14 @@ const VersionItem = ({ title, resolution }) => {
       </div>
       <div class="actions col-4">
         <DownloadVideoButton />
-        <DeleteVideoButton deleteType={"version"} />
+        <DeleteVideoButton
+          deleteType={"version"}
+          videoId={videoId}
+          onClick={onShowModal}
+        />
       </div>
     </li>
   );
-}
+};
 
 export default VersionItem;

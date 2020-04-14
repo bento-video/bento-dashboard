@@ -1,16 +1,8 @@
 import React, { Component } from "react";
-import DeleteVideoModal from "./DeleteVideoModal";
 import DeleteVideoButton from "./DeleteVideoButton";
 import { formatSeconds } from "../../helpers";
 
 class VideoInfo extends Component {
-  state = {
-    showModal: false,
-  };
-
-  handleShow = () => this.setState({ showModal: true });
-  handleClose = () => this.setState({ showModal: false });
-
   render() {
     const { id, filename, format, resolution, duration } = this.props.video;
 
@@ -27,16 +19,12 @@ class VideoInfo extends Component {
               Duration: {formatSeconds(duration)}
             </li>
           </ul>
-          <DeleteVideoButton deleteType={"video"} onClick={this.handleShow} />
+          <DeleteVideoButton
+            deleteType={"video"}
+            onClick={this.props.onShowModal}
+            videoId={id}
+          />
         </div>
-
-        <DeleteVideoModal
-          deleteType={"video"}
-          show={this.state.showModal}
-          onClose={this.handleClose}
-          videoId={id}
-        />
-        {/* <DeleteVideoModal deleteType={"video"} show={this.state.showModal} /> */}
       </section>
     );
   }

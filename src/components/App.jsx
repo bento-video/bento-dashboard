@@ -40,9 +40,25 @@ class App extends Component {
     const videoUpload = await axios
       .post(presignedPostData.url, formData)
       .then((res) => {
-        console.log(res);
+        console.log("Response from s3: " + JSON.stringify(res));
+        return res.status;
       })
       .catch((err) => console.log(err));
+
+    const addToTableParams = {
+      id: presignedPostData.videoId,
+      filename: file.name,
+    };
+
+    await axios
+      .post("http://localhost:3001/videos/", addToTableParams)
+      .then((res) => {
+        console.log(res);
+        const videoData = res.data;
+        this.setState((prevState) => ({
+          videos: [...prevState.videos, videoData],
+        }));
+      });
   };
 
   render() {

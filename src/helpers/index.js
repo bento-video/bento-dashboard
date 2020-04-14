@@ -1,3 +1,5 @@
+const bytes = require("bytes");
+
 const getExt = (filename) => {
   return filename.split(".").pop();
 };
@@ -36,7 +38,10 @@ export const formatSeconds = (seconds) => {
   return result.length > 0 ? result.join(":") : "00:00";
 };
 
+export const formatBytes = (num) => bytes(+num, { unitSeparator: " " });
+
 export default {
   getContentType,
   formatSeconds,
+  formatBytes,
 };

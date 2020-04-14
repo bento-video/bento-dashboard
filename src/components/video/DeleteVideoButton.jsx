@@ -1,12 +1,12 @@
 import React from "react";
 
-const DeleteVideoButton = (props) => {
+const DeleteVideoButton = ({ onClick, videoId, deleteType }) => {
   return (
     <button
       id="delete-original"
       type="button"
-      class="btn btn-danger"
-      onClick={props.onClick}
+      className="btn btn-danger"
+      onClick={() => onClick(videoId, deleteType)}
     >
       Delete
     </button>
