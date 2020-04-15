@@ -1,66 +1,56 @@
-import React, { Component } from 'react';
+import React, { useState } from "react";
+import { resolutionOptions } from "../../helpers";
 
-class CreateVersionForm extends Component {
-  state = {};
-  render() {
-    return (
-      <form action="#" method="post" id="create-version">
-        <fieldset class="form-group">
+const CreateVersionForm = ({
+  onCreateVersion,
+  onClose,
+  resLimit,
+  videoId,
+  filename,
+}) => {
+  const [selectedResolution, setSelected] = useState(resLimit);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(selectedResolution);
+    onCreateVersion(videoId, filename, selectedResolution);
+    onClose();
+  };
+
+  const handleChange = (e) => {
+    setSelected(e.target.value);
+  };
+
+  const formOptions = resolutionOptions(resLimit);
+  return (
+    <form onSubmit={handleSubmit} id="create-version-form">
+      <fieldset class="form-group">
+        {formOptions.map((opt, idx) => (
           <div class="form-check">
             <input
-              type="checkbox"
+              type="radio"
               class="form-check-input"
-              id="4k_check" />
-            <label class="form-check-label" for="4k_check">
-              <div>4k</div>
-              <span>(3,840 x 2,160)</span>
+              id={opt}
+              value={opt}
+              checked={opt === selectedResolution}
+              onChange={handleChange}
+            />
+            <label class="form-check-label" for={opt}>
+              <div>{`${opt}${idx === 0 ? " (Original resolution)" : ""}`}</div>
             </label>
           </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="1080_check" />
-            <label class="form-check-label" for="1080_check">
-              <div>1080p</div>
-              <span>(1920x1080)</span>
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="720_check" />
-            <label class="form-check-label" for="720_check">
-              <div>720p</div>
-              <span>(1280x720)</span>
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="480_check" />
-            <label class="form-check-label" for="480_check">
-              <div>480p</div>
-              <span>(640x480)</span>
-            </label>
-          </div>
-        </fieldset>
-        <div class="row">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-dismiss="modal">
-            Close
+        ))}
+      </fieldset>
+      <div class="row">
+        <button type="button" class="btn btn-secondary" onClick={onClose}>
+          Close
         </button>
-          <button type="submit" class="btn btn-success">
-            Begin job
+        <button type="submit" class="btn btn-success">
+          Begin job
         </button>
-        </div>
-      </form>
-    );
-  }
-}
+      </div>
+    </form>
+  );
+};
 
 export default CreateVersionForm;

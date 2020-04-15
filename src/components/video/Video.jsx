@@ -3,27 +3,32 @@ import { useParams } from "react-router-dom";
 import VideoInfo from "./VideoInfo";
 import VersionList from "./VersionList";
 import DeleteVideoModal from "./DeleteVideoModal";
+import CreateVersionModal from "./CreateVersionModal";
 import axios from "axios";
 
 const Video = (props) => {
-  const [showModal, setModal] = useState(false);
-  const [modalVideoId, setModalId] = useState(null);
-  const [modalType, setModalType] = useState(null);
+  const [showDeleteModal, setDeleteModal] = useState(false);
+  const [showCreateModal, setCreateModal] = useState(false);
+  const [deleteModalVideoId, setDeleteModalId] = useState(null);
+  const [deleteModalType, setDeleteModalType] = useState(null);
   const [versions, setVersions] = useState([]);
   const [loadingVersions, setLoading] = useState(true);
 
   const { id } = useParams();
 
-  const handleShow = (videoId, deleteType) => {
-    setModal(true);
-    setModalId(videoId);
-    setModalType(deleteType);
+  const handleShowDeleteModal = (videoId, deleteType) => {
+    setDeleteModal(true);
+    setDeleteModalId(videoId);
+    setDeleteModalType(deleteType);
   };
-  const handleClose = () => {
-    setModal(false);
-    setModalId(null);
-    setModalType(null);
+  const handleCloseDeleteModal = () => {
+    setDeleteModal(false);
+    setDeleteModalId(null);
+    setDeleteModalType(null);
   };
+
+  const handleShowCreateModal = () => setCreateModal(true);
+  const handleCloseCreateModal = () => setCreateModal(false);
 
   const video = props.loadingVideos
     ? null
@@ -35,7 +40,7 @@ const Video = (props) => {
         const versionData = await axios
           .get(`http://localhost:3001/videos/${id}`)
           .then((res) => {
-            console.log(res.data.versions);
+            console.log("versions:", res.data.versions);
             return res.data.versions;
           });
         setVersions(versionData);
@@ -44,22 +49,56 @@ const Video = (props) => {
 
       fetchData();
     }
-  }, [video]);
+  }, [video, id]);
+
+  const handleCreateVersion = async (id, filename, resolution) => {
+    const params = {
+      filename,
+      id,
+      resolution,
+    };
+
+    console.log(`creating version with params: ${params}`);
+    await axios
+      .post(`http://localhost:3001/videos/${id}/new`, params)
+      .then((res) => {
+        console.log(`Received response: ${JSON.stringify(res)}`);
+        const pendingVersion = {
+          filename: filename.split(".")[0],
+          resolution,
+          outputType: ".mp4",
+          status: "pending",
+        };
+        console.log("planning to add", JSON.stringify(pendingVersion));
+        setVersions([...versions, pendingVersion]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return video ? (
     <div>
-      <main class="container">
-        <VideoInfo video={video} onShowModal={handleShow} />
+      <main className="container">
+        <VideoInfo video={video} onShowModal={handleShowDeleteModal} />
         <VersionList
+          video={video}
           versions={versions}
-          onShowModal={handleShow}
+          onShowDeleteModal={handleShowDeleteModal}
           loading={loadingVersions}
+          onShowCreateModal={handleShowCreateModal}
         />
         <DeleteVideoModal
-          deleteType={modalType}
-          show={showModal}
-          onClose={handleClose}
-          videoId={modalVideoId}
+          deleteType={deleteModalType}
+          show={showDeleteModal}
+          onClose={handleCloseDeleteModal}
+          videoId={deleteModalVideoId}
+        />
+        <CreateVersionModal
+          resLimit={video.resolution}
+          show={showCreateModal}
+          filename={video.filename}
+          videoId={video.id}
+          onClose={handleCloseCreateModal}
+          onCreateVersion={handleCreateVersion}
         />
       </main>
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import VersionItem from "./VersionItem";
 import CreateVersionButton from "./CreateVersionButton";
-import CreateVersionModal from "./CreateVersionModal";
+import { getVersionFilename } from "../../helpers";
 
 const VersionList = (props) => {
   return props.loading ? (
@@ -13,20 +13,23 @@ const VersionList = (props) => {
     <section id="versions">
       <h2>Versions</h2>
       <ul className="versions list-group">
-        {props.versions.map((version) => (
-          <VersionItem
-            key={version.id}
-            versionId={version.id}
-            title={version.versionUrl.split("/").pop()}
-            versionUrl={version.versionUrl}
-            resolution={version.resolution}
-            onShowModal={props.onShowModal}
-          />
-        ))}
+        {props.versions.map((version) => {
+          // const filename = version.status === 'pending' ?
+          return (
+            <VersionItem
+              key={version.id}
+              versionId={version.id}
+              filename={getVersionFilename(version)}
+              versionUrl={version.versionUrl}
+              resolution={version.resolution}
+              status={version.status}
+              onShowModal={props.onShowDeleteModal}
+            />
+          );
+        })}
 
-        <CreateVersionButton />
+        <CreateVersionButton onClick={props.onShowCreateModal} />
       </ul>
-      <CreateVersionModal />
     </section>
   );
 };

@@ -54,10 +54,36 @@ export const sortFilenames = (videoA, videoB) => {
 
 export const formatResolution = (resolution) => `${resolution.split("x")[1]}p`;
 
+export const resolutionOptions = (resLimit) => {
+  const supportedResolutions = [
+    "3840x2160",
+    "1920x1080",
+    "1280x720",
+    "640x360",
+  ];
+  const limit = Number(resLimit.split("x")[1]);
+  return supportedResolutions.reduce(
+    (opts, cur) => {
+      const curRes = Number(cur.split("x")[1]);
+      if (curRes < limit) {
+        opts.push(cur);
+      }
+      return opts;
+    },
+    [resLimit]
+  );
+};
+
+export const getVersionFilename = ({ filename, resolution, outputType }) => {
+  resolution = resolution.split("x")[1];
+  return `${filename}-${resolution}${outputType}`;
+};
+
 export default {
   getContentType,
   formatSeconds,
   formatBytes,
   sortFilenames,
   formatResolution,
+  getVersionFilename,
 };

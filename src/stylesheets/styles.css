@@ -12,6 +12,7 @@
   --bento-medgreen: #4dd599;
   --bento-limegreen: #cff52a;
   --bento-yellow: #ffee61;
+  --bento-darkgray: #495057;
 }
 
 body {
@@ -29,7 +30,7 @@ h2,
 h3 {
   font-weight: 700;
   font-family: "Catamaran Black", Cambria, sans-serif;
-  color: var(--bento-blue);
+  color: var(--bento-medgreen);
 }
 
 h4,
@@ -38,6 +39,7 @@ h6,
 p {
   font-family: "Montserrat", sans-serif;
   margin: 0;
+  color: var(--bento-darkgray);
 }
 
 a:hover {
@@ -67,18 +69,18 @@ a:hover {
 }
 
 #add-video p {
-  color: darkslategray;
+  color: var(--bento-darkgray);
   font-weight: bold;
 }
 
 #add-video svg {
   width: 120px;
-  fill: darkslategray;
+  fill: var(--bento-darkgray);
   margin-bottom: 5px;
   transition: fill 0.15s ease-in-out;
 }
 
-#add-video svg:hover {
+#add-video:hover svg {
   fill: var(--bento-limegreen);
 }
 
@@ -90,7 +92,8 @@ a:hover {
 
 .jumbotron {
   background-color: white;
-  border: 1px solid lightgray;
+  /* border: 1px solid lightgray; */
+  border: 1px solid var(--bento-medgreen);
 }
 
 #original-video .row {
@@ -103,17 +106,9 @@ a:hover {
   margin-right: auto;
 }
 
-/* #original-video ul {
-  width: max-content;
-  display: flex;
-  flex-direction: column;
+#original-title {
+  color: #495057;
 }
-
-#original-video li {
-  display: inline;
-  width: 100px;
-  background-color: inherit;
-} */
 
 .versions .list-group-item {
   display: flex;
@@ -127,7 +122,7 @@ a:hover {
 
 .details {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .resolution {
@@ -158,45 +153,39 @@ a:hover {
   background-color: var(--bento-yellow);
 }
 
-.create-version {
+#create-version {
   border: none;
   width: 300px;
   justify-content: start;
   font-size: 1.2em;
-  transition: color 0.15s ease-in-out;
 }
 
-.create-version:hover {
-  color: var(--bento-limegreen);
+#create-version:hover {
   cursor: pointer;
 }
 
-.create-version svg {
+#create-version svg {
   fill: var(--bento-limegreen);
   height: 3em;
   width: 3em;
 }
 
-/* MODAL */
-
-#create-version .form-check {
-  margin-bottom: 15px;
+#create-version:hover svg {
+  fill: var(--bento-limegreen);
 }
 
-#create-version label {
-  display: flex;
-  align-items: center;
+#create-version p {
+  transition: color 0.15s ease-in-out;
 }
 
-#create-version label div {
-  width: 50px;
-  margin-right: 5px;
-  font-weight: bold;
+#create-version:hover p {
+  color: var(--bento-medgreen);
 }
 
-#create-version label span {
-  font-size: 0.8em;
-  color: gray;
+/* FORM */
+
+#create-version-form .form-check {
+  margin-bottom: 1rem;
 }
 
 form .row {
