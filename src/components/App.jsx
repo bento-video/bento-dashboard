@@ -8,7 +8,8 @@ import axios from "axios";
 class App extends Component {
   state = {
     videos: null,
-    loading: true,
+    loadingVideos: true,
+    uploading: false,
   };
 
   componentDidMount() {
@@ -16,7 +17,7 @@ class App extends Component {
       console.log(res.data);
       this.setState({
         videos: res.data,
-        loading: false,
+        loadingVideos: false,
       });
       console.log("STATE: ", this.state.videos);
     });
@@ -69,12 +70,15 @@ class App extends Component {
           <Route exact path="/">
             <Dashboard
               videos={this.state.videos}
-              loading={this.state.loading}
+              loadingVideos={this.state.loadingVideos}
               onVideoUpload={this.handleVideoUpload}
             />
           </Route>
           <Route path="/videos/:id">
-            <Video loading={this.state.loading} videos={this.state.videos} />
+            <Video
+              loadingVideos={this.state.loadingVideos}
+              videos={this.state.videos}
+            />
           </Route>
           <Route path="*">
             <Redirect to="/" />

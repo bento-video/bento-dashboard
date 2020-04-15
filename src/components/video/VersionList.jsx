@@ -4,19 +4,21 @@ import CreateVersionButton from "./CreateVersionButton";
 import CreateVersionModal from "./CreateVersionModal";
 
 const VersionList = (props) => {
-  const versions = [
-    { filename: "SoftServe.mp4", resolution: "1080" },
-    { filename: "SoftServe.mp4", resolution: "480" },
-  ];
-  return (
+  return props.loading ? (
+    <section id="versions">
+      <h2>Versions</h2>
+      <h5>Loading versions...</h5>
+    </section>
+  ) : (
     <section id="versions">
       <h2>Versions</h2>
       <ul className="versions list-group">
-        {versions.map((version, idx) => (
+        {props.versions.map((version) => (
           <VersionItem
-            key={idx}
-            videoId={idx}
-            title={version.filename}
+            key={version.id}
+            versionId={version.id}
+            title={version.versionUrl.split("/").pop()}
+            versionUrl={version.versionUrl}
             resolution={version.resolution}
             onShowModal={props.onShowModal}
           />

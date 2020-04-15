@@ -40,8 +40,24 @@ export const formatSeconds = (seconds) => {
 
 export const formatBytes = (num) => bytes(+num, { unitSeparator: " " });
 
+export const sortFilenames = (videoA, videoB) => {
+  const a = videoA.filename.toUpperCase();
+  const b = videoB.filename.toUpperCase();
+  if (a > b) {
+    return 1;
+  } else if (a < b) {
+    return -1;
+  } else {
+    return 0;
+  }
+};
+
+export const formatResolution = (resolution) => `${resolution.split("x")[1]}p`;
+
 export default {
   getContentType,
   formatSeconds,
   formatBytes,
+  sortFilenames,
+  formatResolution,
 };
