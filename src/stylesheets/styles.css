@@ -200,3 +200,17 @@ li span.alert {
   color: red;
   padding: 0;
 }
+
+/* Progress bar */
+#nprogress .bar {
+  background: var(--bento-medgreen) !important;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px var(--bento-medgreen), 0 0 5px var(--bento-medgreen) !important;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: var(--bento-medgreen) !important;
+  border-left-color: var(--bento-medgreen) !important;
+}

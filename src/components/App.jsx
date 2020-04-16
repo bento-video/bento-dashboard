@@ -5,6 +5,8 @@ import Header from "./Header";
 import Dashboard from "./dashboard/Dashboard";
 import Video from "./video/Video";
 import axios from "axios";
+import { loadProgressBar } from "axios-progress-bar";
+
 import { fetchVideos } from "../actions";
 
 const App = () => {
@@ -33,7 +35,9 @@ const App = () => {
 
   const handleVideoUpload = async (file) => {
     // Get presigned url for upload
-    const presignedPostData = await axios
+    const uploader = axios.create();
+    loadProgressBar({}, uploader);
+    const presignedPostData = await uploader
       .post("http://localhost:3001/videos/new", { filename: file.name })
       .then((res) => {
         console.log(res);
@@ -59,7 +63,7 @@ const App = () => {
     formData.append("file", file);
 
     //File upload
-    await axios
+    await uploader
       .post(presignedPostData.url, formData)
       .then((res) => {
         console.log("Response from s3: " + JSON.stringify(res));
@@ -73,7 +77,7 @@ const App = () => {
       filename: file.name,
     };
 
-    await axios
+    await uploader
       .post("http://localhost:3001/videos/", addToTableParams)
       .then((res) => {
         console.log(res);
