@@ -13,11 +13,11 @@ const VersionList = (props) => {
     <section id="versions">
       <h2>Versions</h2>
       <ul className="versions list-group">
-        {props.versions.map((version) => {
+        {props.versions.map((version, idx) => {
           // const filename = version.status === 'pending' ?
           return (
             <VersionItem
-              key={version.id}
+              key={version.id ? version.id : idx}
               versionId={version.id}
               filename={getVersionFilename(version)}
               versionUrl={version.versionUrl}

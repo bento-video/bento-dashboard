@@ -10,6 +10,7 @@ const VersionItem = ({
   onShowModal,
   versionUrl,
   status,
+  onDelete,
 }) => {
   return (
     <li className="video-version item list-group-item">

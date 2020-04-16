@@ -17,6 +17,7 @@ const VideoList = (props) => {
           size={video.size}
           versions={video.versions}
           key={video.id}
+          uploading={video.uploading}
         />
       ))}
     </div>

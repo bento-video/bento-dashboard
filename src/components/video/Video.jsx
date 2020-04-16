@@ -5,8 +5,9 @@ import VersionList from "./VersionList";
 import DeleteVideoModal from "./DeleteVideoModal";
 import CreateVersionModal from "./CreateVersionModal";
 import axios from "axios";
+import { fetchVersions } from "../../actions";
 
-const Video = (props) => {
+const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
   const [showDeleteModal, setDeleteModal] = useState(false);
   const [showCreateModal, setCreateModal] = useState(false);
   const [deleteModalVideoId, setDeleteModalId] = useState(null);
@@ -30,24 +31,18 @@ const Video = (props) => {
   const handleShowCreateModal = () => setCreateModal(true);
   const handleCloseCreateModal = () => setCreateModal(false);
 
-  const video = props.loadingVideos
-    ? null
-    : props.videos.find((video) => video.id === id);
+  const video = loadingVideos ? null : videos.find((video) => video.id === id);
 
   useEffect(() => {
     if (video) {
-      const fetchData = async () => {
-        const versionData = await axios
-          .get(`http://localhost:3001/videos/${id}`)
-          .then((res) => {
-            console.log("versions:", res.data.versions);
-            return res.data.versions;
-          });
-        setVersions(versionData);
-        setLoading(false);
+      const fetchVersionData = async () => {
+        await fetchVersions(id).then((versionData) => {
+          setVersions(versionData);
+          setLoading(false);
+        });
       };
 
-      fetchData();
+      fetchVersionData();
     }
   }, [video, id]);
 
@@ -75,6 +70,17 @@ const Video = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const handleDeleteVersion = async (versionId) => {
+    console.log("Handling deletion of version", versionId);
+    setVersions(versions.filter((version) => version.id !== versionId));
+    await axios
+      .delete(`http://localhost:3001/versions/${versionId}`)
+      .then((_) => console.log("Deletion successful"))
+      .catch((err) => console.log(err));
+
+    await fetchVersions(id).then(setVersions);
+  };
+
   return video ? (
     <div>
       <main className="container">
@@ -85,12 +91,15 @@ const Video = (props) => {
           onShowDeleteModal={handleShowDeleteModal}
           loading={loadingVersions}
           onShowCreateModal={handleShowCreateModal}
+          onDelete={handleDeleteVersion}
         />
         <DeleteVideoModal
           deleteType={deleteModalType}
           show={showDeleteModal}
           onClose={handleCloseDeleteModal}
           videoId={deleteModalVideoId}
+          onDeleteVersion={handleDeleteVersion}
+          onDeleteVideo={onDeleteVideo}
         />
         <CreateVersionModal
           resLimit={video.resolution}
