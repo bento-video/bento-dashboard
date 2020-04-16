@@ -1,13 +1,17 @@
 import React, { Component } from "react";
+import { validateFileInput } from "../../helpers";
 
 class AddVideoForm extends Component {
   state = {
     file: null,
+    error: null,
   };
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.file) {
+    const { error, msg } = validateFileInput(this.state.file);
+    if (error) {
+      this.setState({ error: msg });
       return;
     }
 
@@ -22,18 +26,21 @@ class AddVideoForm extends Component {
     e.preventDefault();
     this.setState({
       file: e.target.files[0],
+      error: null,
     });
   };
 
   render() {
     return (
       <form id="add-video-form" onSubmit={this.handleSubmit}>
+        <p className="text-danger">{this.state.error}</p>
         <fieldset className="form-group">
           <input
             type="file"
             name="new_video"
             id="new_video"
             onChange={this.handleChange}
+            accept="video/mp4,video/quicktime,video/*,.ts,video/3gpp,video/*,.mkv"
           />
         </fieldset>
         <div>
