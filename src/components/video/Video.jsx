@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useInterval from "../../helpers/useInterval";
 import VideoInfo from "./VideoInfo";
 import VersionList from "./VersionList";
 import DeleteVideoModal from "./DeleteVideoModal";
@@ -14,6 +15,8 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
   const [deleteModalType, setDeleteModalType] = useState(null);
   const [versions, setVersions] = useState([]);
   const [loadingVersions, setLoading] = useState(true);
+  const [pendingVersionId, setPendingVersionId] = useState(null);
+  // const [versionStatusInterval, setVersionStatusInterval] = useState(null);
 
   const { id } = useParams();
 
@@ -46,6 +49,18 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
     }
   }, [video, id]);
 
+  // useEffect(() => {
+  //   console.log("setting up interval..");
+  //   let interval = setInterval(checkVersionStatus, 1000 * 10);
+  //   setVersionStatusInterval(interval);
+
+  //   return () => {
+  //     clearInterval(interval);
+  //     setPendingVersionId(null);
+  //     setVersionStatusInterval(null);
+  //   };
+  // }, []);
+
   const handleCreateVersion = async (id, filename, resolution) => {
     const params = {
       filename,
@@ -58,7 +73,11 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
       .post(`http://localhost:3001/videos/${id}/new`, params)
       .then((res) => {
         console.log(`Received response: ${JSON.stringify(res)}`);
+        console.log("setting pending version Id", res.data.jobId);
+        setPendingVersionId(res.data.jobId);
+
         const pendingVersion = {
+          id: res.data.jobId,
           filename: filename.split(".")[0],
           resolution,
           outputType: ".mp4",
@@ -69,6 +88,33 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const checkVersionStatus = async () => {
+    console.log("checkVersion...", pendingVersionId);
+    if (!pendingVersionId) {
+      return;
+    }
+
+    console.log("Checking status of", pendingVersionId);
+
+    await axios
+      .get(`http://localhost:3001/versions/${pendingVersionId}`)
+      .then((version) => {
+        console.log("Current status", version.data);
+        if (version.data.status && version.data.status === "completed") {
+          console.log("attempting to add version..");
+          setVersions([
+            ...versions.filter((version) => version.id !== pendingVersionId),
+            version.data,
+          ]);
+          // clearInterval(versionStatusInterval);
+          // setVersionStatusInterval(null);
+          setPendingVersionId(null);
+        }
+      });
+  };
+
+  useInterval(checkVersionStatus, pendingVersionId ? 10000 : null);
 
   const handleDeleteVersion = async (versionId) => {
     console.log("Handling deletion of version", versionId);
