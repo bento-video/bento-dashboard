@@ -1,5 +1,6 @@
 import React from "react";
 import VideoItem from "./VideoItem";
+import { sortFilenames } from "../../helpers";
 
 const VideoList = (props) => {
   return props.loading ? (
@@ -8,14 +9,15 @@ const VideoList = (props) => {
     </div>
   ) : (
     <div id="all-videos" className="list-group">
-      {props.videos.map((video, idx) => (
+      {props.videos.sort(sortFilenames).map((video) => (
         <VideoItem
           videoId={video.id}
           filename={video.filename}
           resolution={video.resolution}
           size={video.size}
           versions={video.versions}
-          key={idx}
+          key={video.id}
+          uploading={video.uploading}
         />
       ))}
     </div>

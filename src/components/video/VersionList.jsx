@@ -1,30 +1,35 @@
 import React from "react";
 import VersionItem from "./VersionItem";
 import CreateVersionButton from "./CreateVersionButton";
-import CreateVersionModal from "./CreateVersionModal";
+import { getVersionFilename } from "../../helpers";
 
 const VersionList = (props) => {
-  const versions = [
-    { filename: "SoftServe.mp4", resolution: "1080" },
-    { filename: "SoftServe.mp4", resolution: "480" },
-  ];
-  return (
+  return props.loading ? (
+    <section id="versions">
+      <h2>Versions</h2>
+      <h5>Loading versions...</h5>
+    </section>
+  ) : (
     <section id="versions">
       <h2>Versions</h2>
       <ul className="versions list-group">
-        {versions.map((version, idx) => (
-          <VersionItem
-            key={idx}
-            videoId={idx}
-            title={version.filename}
-            resolution={version.resolution}
-            onShowModal={props.onShowModal}
-          />
-        ))}
+        {props.versions.map((version, idx) => {
+          // const filename = version.status === 'pending' ?
+          return (
+            <VersionItem
+              key={version.id ? version.id : idx}
+              versionId={version.id}
+              filename={getVersionFilename(version)}
+              versionUrl={version.versionUrl}
+              resolution={version.resolution}
+              status={version.status}
+              onShowModal={props.onShowDeleteModal}
+            />
+          );
+        })}
 
-        <CreateVersionButton />
+        <CreateVersionButton onClick={props.onShowCreateModal} />
       </ul>
-      <CreateVersionModal />
     </section>
   );
 };
