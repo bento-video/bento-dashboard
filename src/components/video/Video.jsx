@@ -16,7 +16,6 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
   const [versions, setVersions] = useState([]);
   const [loadingVersions, setLoading] = useState(true);
   const [pendingVersionId, setPendingVersionId] = useState(null);
-  // const [versionStatusInterval, setVersionStatusInterval] = useState(null);
 
   const { id } = useParams();
 
@@ -48,18 +47,6 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
       fetchVersionData();
     }
   }, [video, id]);
-
-  // useEffect(() => {
-  //   console.log("setting up interval..");
-  //   let interval = setInterval(checkVersionStatus, 1000 * 10);
-  //   setVersionStatusInterval(interval);
-
-  //   return () => {
-  //     clearInterval(interval);
-  //     setPendingVersionId(null);
-  //     setVersionStatusInterval(null);
-  //   };
-  // }, []);
 
   const handleCreateVersion = async (id, filename, resolution) => {
     const params = {
@@ -107,8 +94,7 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
             ...versions.filter((version) => version.id !== pendingVersionId),
             version.data,
           ]);
-          // clearInterval(versionStatusInterval);
-          // setVersionStatusInterval(null);
+
           setPendingVersionId(null);
         }
       });
