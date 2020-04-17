@@ -9,6 +9,8 @@ import { loadProgressBar } from "axios-progress-bar";
 
 import { fetchVideos } from "../actions";
 
+const ec2IP = process.env.PUBLIC_EC2_IP
+
 const App = () => {
   const [videos, setVideos] = useState(null);
   const [loadingVideos, setLoadingVideos] = useState(true);
@@ -27,7 +29,7 @@ const App = () => {
     console.log("Handling deletion of video id", videoId);
     setVideos(videos.filter((video) => video.id !== videoId));
     await axios
-      .delete(`http://localhost:3001/videos/${videoId}`)
+      .delete(`http://${ec2IP}:3001/videos/${videoId}`)
       .then((_) => console.log("Deletion successful"))
       .catch((err) => console.log(err));
     // await fetchVideos().then(setVideos(videos));
@@ -38,7 +40,7 @@ const App = () => {
     const uploader = axios.create();
     loadProgressBar({}, uploader);
     const presignedPostData = await uploader
-      .post("http://localhost:3001/videos/new", { filename: file.name })
+      .post(`http://${ec2IP}:3001/videos/new`, { filename: file.name })
       .then((res) => {
         console.log(res);
         return res.data;
@@ -78,7 +80,7 @@ const App = () => {
     };
 
     await uploader
-      .post("http://localhost:3001/videos/", addToTableParams)
+      .post(`http://${ec2IP}:3001/videos/`, addToTableParams)
       .then((res) => {
         console.log(res);
         const videoData = res.data;
