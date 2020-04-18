@@ -7,6 +7,7 @@ import DeleteVideoModal from "./DeleteVideoModal";
 import CreateVersionModal from "./CreateVersionModal";
 import axios from "axios";
 import { fetchVersions } from "../../actions";
+import { VIDEOS_ROUTE, VERSIONS_ROUTE } from "../../helpers/apiRoutes";
 
 const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
   const [showDeleteModal, setDeleteModal] = useState(false);
@@ -55,12 +56,9 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
       resolution,
     };
 
-    console.log(`creating version with params: ${params}`);
     await axios
-      .post(`http://localhost:3001/videos/${id}/new`, params)
+      .post(`${VIDEOS_ROUTE}${id}/new`, params)
       .then((res) => {
-        console.log(`Received response: ${JSON.stringify(res)}`);
-        console.log("setting pending version Id", res.data.jobId);
         setPendingVersionId(res.data.jobId);
 
         const pendingVersion = {
@@ -70,44 +68,35 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
           outputType: ".mp4",
           status: "pending",
         };
-        console.log("planning to add", JSON.stringify(pendingVersion));
         setVersions([...versions, pendingVersion]);
       })
       .catch((err) => console.log(err));
   };
 
   const checkVersionStatus = async () => {
-    console.log("checkVersion...", pendingVersionId);
     if (!pendingVersionId) {
       return;
     }
 
-    console.log("Checking status of", pendingVersionId);
+    await axios.get(`${VERSIONS_ROUTE}${pendingVersionId}`).then((resp) => {
+      if (resp.data.status && resp.data.status === "completed") {
+        setVersions([
+          ...versions.filter((version) => version.id !== pendingVersionId),
+          resp.data,
+        ]);
 
-    await axios
-      .get(`http://localhost:3001/versions/${pendingVersionId}`)
-      .then((version) => {
-        console.log("Current status", version.data);
-        if (version.data.status && version.data.status === "completed") {
-          console.log("attempting to add version..");
-          setVersions([
-            ...versions.filter((version) => version.id !== pendingVersionId),
-            version.data,
-          ]);
-
-          setPendingVersionId(null);
-        }
-      });
+        setPendingVersionId(null);
+      }
+    });
   };
 
+  // Sets interval to check on version status if there is a pending version
   useInterval(checkVersionStatus, pendingVersionId ? 10000 : null);
 
   const handleDeleteVersion = async (versionId) => {
-    console.log("Handling deletion of version", versionId);
     setVersions(versions.filter((version) => version.id !== versionId));
     await axios
-      .delete(`http://localhost:3001/versions/${versionId}`)
-      .then((_) => console.log("Deletion successful"))
+      .delete(`${VERSIONS_ROUTE}${versionId}`)
       .catch((err) => console.log(err));
 
     await fetchVersions(id).then(setVersions);

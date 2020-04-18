@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 const DeleteVideoForm = ({
@@ -12,7 +12,6 @@ const DeleteVideoForm = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Planning to delete ${deleteType} ${videoId}`);
     if (deleteType === "version") {
       onDeleteVersion(videoId);
       onClose();

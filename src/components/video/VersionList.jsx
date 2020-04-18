@@ -14,7 +14,6 @@ const VersionList = (props) => {
       <h2>Versions</h2>
       <ul className="versions list-group">
         {props.versions.map((version, idx) => {
-          // const filename = version.status === 'pending' ?
           return (
             <VersionItem
               key={version.id ? version.id : idx}

@@ -6,7 +6,7 @@ import Dashboard from "./dashboard/Dashboard";
 import Video from "./video/Video";
 import axios from "axios";
 import { loadProgressBar } from "axios-progress-bar";
-
+import { VIDEOS_ROUTE, FETCH_PRESIGNEDURL_ROUTE } from "../helpers/apiRoutes";
 import { fetchVideos } from "../actions";
 
 const App = () => {
@@ -14,6 +14,9 @@ const App = () => {
   const [loadingVideos, setLoadingVideos] = useState(true);
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") {
+      console.log(`Env: ${process.env.NODE_ENV}`);
+    }
     const fetchVideosData = async () => {
       await fetchVideos().then((videos) => {
         setVideos(videos);
@@ -24,13 +27,10 @@ const App = () => {
   }, []);
 
   const handleDeleteVideo = async (videoId) => {
-    console.log("Handling deletion of video id", videoId);
     setVideos(videos.filter((video) => video.id !== videoId));
     await axios
-      .delete(`http://localhost:3001/videos/${videoId}`)
-      .then((_) => console.log("Deletion successful"))
+      .delete(`${VIDEOS_ROUTE}${videoId}`)
       .catch((err) => console.log(err));
-    // await fetchVideos().then(setVideos(videos));
   };
 
   const handleVideoUpload = async (file) => {
@@ -38,7 +38,7 @@ const App = () => {
     const uploader = axios.create();
     loadProgressBar({}, uploader);
     const presignedPostData = await uploader
-      .post("http://localhost:3001/videos/new", { filename: file.name })
+      .post(FETCH_PRESIGNEDURL_ROUTE, { filename: file.name })
       .then((res) => {
         console.log(res);
         return res.data;
@@ -66,7 +66,6 @@ const App = () => {
     await uploader
       .post(presignedPostData.url, formData)
       .then((res) => {
-        console.log("Response from s3: " + JSON.stringify(res));
         return res.status;
       })
       .catch((err) => console.log(err));
@@ -77,13 +76,10 @@ const App = () => {
       filename: file.name,
     };
 
-    await uploader
-      .post("http://localhost:3001/videos/", addToTableParams)
-      .then((res) => {
-        console.log(res);
-        const videoData = res.data;
-        setVideos([...videos, videoData]);
-      });
+    await uploader.post(VIDEOS_ROUTE, addToTableParams).then((res) => {
+      const videoData = res.data;
+      setVideos([...videos, videoData]);
+    });
   };
 
   return (
