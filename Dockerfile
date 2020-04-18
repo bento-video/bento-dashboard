@@ -12,7 +12,6 @@ ENV PATH /usr/src/app/node_modules/.bin:$PATH
 # COPY package-lock.json ./
 COPY package*.json /usr/src/app/
 RUN npm install serve
-RUN serve -s build
 
 #add app
 COPY . ./
@@ -22,4 +21,4 @@ CMD [ "serve", "-s", "build" ]
 # CMD [ "npm", "start" ]
 
 #Tells Docker to open port 4000 on the container when it is running
-EXPOSE 4000
+EXPOSE 5000
