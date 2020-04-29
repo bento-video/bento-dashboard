@@ -1,7 +1,7 @@
 const bytes = require("bytes");
 const path = require("path");
 
-const VALID_FILETYPES = [".mp4", ".mov", ".ts", "mkv", "3gp"];
+const VALID_FILETYPES = [".mp4", ".mov", ".ts", ".mkv", ".3gp"];
 
 const getContentType = (filename) => {
   let contentType;

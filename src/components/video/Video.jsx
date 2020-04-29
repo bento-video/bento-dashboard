@@ -38,6 +38,7 @@ const Video = ({ videos, loadingVideos, onDeleteVideo }) => {
 
   useEffect(() => {
     if (video) {
+      console.log(video);
       const fetchVersionData = async () => {
         await fetchVersions(id).then((versionData) => {
           setVersions(versionData);

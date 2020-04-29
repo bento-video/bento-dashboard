@@ -24,28 +24,28 @@ const CreateVersionForm = ({
   const formOptions = resolutionOptions(resLimit);
   return (
     <form onSubmit={handleSubmit} id="create-version-form">
-      <fieldset class="form-group">
+      <fieldset className="form-group">
         {formOptions.map((opt, idx) => (
-          <div class="form-check">
+          <div className="form-check" key={opt}>
             <input
               type="radio"
-              class="form-check-input"
+              className="form-check-input"
               id={opt}
               value={opt}
               checked={opt === selectedResolution}
               onChange={handleChange}
             />
-            <label class="form-check-label" for={opt}>
+            <label className="form-check-label" htmlFor={opt}>
               <div>{`${opt}${idx === 0 ? " (Original resolution)" : ""}`}</div>
             </label>
           </div>
         ))}
       </fieldset>
-      <div class="row">
-        <button type="button" class="btn btn-secondary" onClick={onClose}>
+      <div className="row">
+        <button type="button" className="btn btn-secondary" onClick={onClose}>
           Close
         </button>
-        <button type="submit" class="btn btn-success">
+        <button type="submit" className="btn btn-success">
           Begin job
         </button>
       </div>
